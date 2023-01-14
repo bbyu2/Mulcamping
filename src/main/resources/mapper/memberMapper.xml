@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.myapp.member.MemberDAO">
+    <select id="loginCheck" resultType="com.campus.myapp.member.MemberVO">
+        SELECT userid, nickname, isadmin, gender FROM member
+        WHERE userid=#{userid} and userpwd=#{userpwd}
+    </select>
+    <insert id="memberInsert">
+        INSERT INTO member(userid, username, nickname, userpwd, usertel, birth, gender, email)
+        VALUE (#{userid}, #{username}, #{nickname}, #{userpwd}, #{usertel}, #{birth}, #{gender}, #{email})
+    </insert>
+    <select id="checkId" resultType="com.campus.myapp.member.MemberVO">
+        SELECT userid FROM member
+        WHERE userid=#{userid}
+    </select>
+    <select id="checkNick" resultType="com.campus.myapp.member.MemberVO">
+        SELECT nickname FROM member
+        WHERE nickname=#{nickname}
+    </select>
+    <select id="checkTel" resultType="com.campus.myapp.member.MemberVO">
+        SELECT usertel FROM member
+        WHERE usertel=#{usertel}
+    </select>
+    <select id="findUserid" resultType="com.campus.myapp.member.MemberVO">
+        SELECT userid from member
+        WHERE username=#{username} and usertel=#{usertelP}
+    </select>
+    <update id="memberUpdate">
+        UPDATE member SET nickname=#{nickname}, email=#{email}, userpwd=#{userpwd}, birth=#{birth}, username=#{username}
+        WHERE userid=#{userid}
+    </update>
+    <delete id="memberDelete">
+        DELETE FROM member
+        WHERE userid=#{userid} AND userpwd=#{userpwd}
+    </delete>
+    <select id="memberSelect" resultType="com.campus.myapp.member.MemberVO">
+        SELECT * FROM member
+        WHERE userid=#{param1}
+    </select>
+    <select id="isValidEmail" resultType="com.campus.myapp.member.MemberVO">
+        SELECT userid FROM member
+        WHERE userid=#{userid} AND email=#{email}
+    </select>
+    <update id="findUserPwd">
+        UPDATE member SET userpwd=#{userpwd}
+        WHERE userid=#{userid} AND email=#{email}
+    </update>
+</mapper>

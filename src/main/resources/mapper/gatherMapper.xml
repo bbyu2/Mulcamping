@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.myapp.gather.GatherDAO">
+	<insert id="gatherInsert">
+		INSERT INTO gather(nickname, title, content, place, img, 
+		gmemberno, startdate, enddate)
+		VALUES(#{nickname}, #{title}, #{content}, #{place}, #{img},
+		#{gmemberno}, STR_TO_DATE(#{startdate}, '%Y-%m-%d'), 
+		STR_TO_DATE(#{enddate}, '%Y-%m-%d'))
+	</insert>
+	<select id="gatherList" resultType="GatherVO">
+		SELECT gatherno, title, place, views, nickname,
+		DATE_FORMAT(startdate, "%Y-%m-%d") startdate,
+		DATE_FORMAT(enddate, "%Y-%m-%d") enddate,
+		DATE_FORMAT(createdate, "%y-%m-%d %H:%i") createdate,
+		content, gmemberno, gnewno, thumbnail, img
+		FROM gather ORDER BY gatherno DESC
+		LIMIT ${param1.postsPerPage} OFFSET ${param1.offset}
+	</select>
+	<select id="selectTotalPosts" resultType="int">
+		SELECT COUNT(gatherno)count FROM gather
+	</select>
+	<select id="gatherView" resultType="GatherVO">
+		SELECT gatherno, title, place, views, nickname,
+		DATE_FORMAT(startdate, "%Y-%m-%d") startdate,
+		DATE_FORMAT(enddate, "%Y-%m-%d") enddate,
+		DATE_FORMAT(createdate, "%y-%m-%d %H:%i") createdate,
+		content, gmemberno, gnewno
+		FROM gather WHERE gatherno=#{param1}
+	</select>
+	<select id="selectEditView" resultType="GatherVO">
+		SELECT gatherno, title, place, 
+		DATE_FORMAT(startdate, "%Y-%m-%d") startdate,
+		DATE_FORMAT(enddate, "%Y-%m-%d") enddate,
+		content, gmemberno
+		FROM gather WHERE gatherno=#{param1}
+	</select>
+	<update id="updateEditView">
+		UPDATE gather SET title=#{title}, place=#{place}, 
+		gmemberno=${gmemberno}, content=#{content},
+		startdate=STR_TO_DATE(#{startdate}, '%Y-%m-%d'),  
+		enddate=STR_TO_DATE(#{enddate}, '%Y-%m-%d')
+		WHERE gatherno=${gatherno}
+	</update>
+	<delete id="gatherDelete">
+		DELETE FROM gather WHERE gatherno=#{param1}
+	</delete>
+	<update id="updateViews">
+		UPDATE gather SET views=views+1 
+		WHERE gatherno=#{param1}
+	</update>
+	
+	<!-- 캠퍼 모집 -->
+	<update id="plusGatherCamper">
+		UPDATE gather SET gnewno=gnewno+1 
+		WHERE gatherno=#{param1}
+	</update>
+	<insert id="gathermemberInsert">
+		INSERT INTO gathermember(gmemberno, gatherno, nickname, gender)
+		VALUES(#{param1}, #{param2}, #{param3}, #{param4})
+	</insert>
+	<select id="selectJoinCamper" resultType="GatherMemberVO">
+		SELECT gatherno, nickname FROM gathermember 
+		WHERE gatherno=#{param1} AND nickname=#{param2}
+	</select>
+	<select id="selectCamperList" resultType="GatherMemberVO">
+		SELECT gatherno, nickname, gender FROM gathermember 
+		WHERE gatherno=#{gatherno}
+	</select>
+	<select id="gnewnoCountSelect" resultType="int">
+		SELECT gnewno FROM gather 
+		GROUP BY gatherno 
+		HAVING gatherno=#{param1}
+	</select>
+	<update id="minusGatherCamper">
+		UPDATE gather SET gnewno=gnewno-1 
+		WHERE gatherno=#{param1} 
+	</update>
+	<delete id="gathermemberDel">
+		DELETE FROM gathermember 
+		WHERE gatherno=${param1} AND nickname=#{param2}
+	</delete>
+	
+	<!-- 댓글 -->
+	<select id="replyCountSelect" resultType="int">
+		SELECT COUNT(gatherno)count FROM gatherreply 
+		WHERE gatherno=#{param1}
+	</select>
+	<insert id="replyWrite">
+		INSERT INTO gatherreply(content, nickname, gatherno)
+		VALUES(#{content}, #{nickname}, ${gatherno})
+	</insert>
+	<select id="replyList" resultType="ReplyVO">
+		SELECT replyno, content, nickname, gatherno,
+		DATE_FORMAT(writedate, "%y-%m-%d %H:%i")writedate
+		FROM gatherreply WHERE gatherno=#{param1}
+		ORDER BY replyno DESC
+	</select>
+	<update id="replyEdit">
+		UPDATE gatherreply SET content=#{content} 
+		WHERE replyno=${replyno}
+	</update>
+	<delete id="replyDel">
+		DELETE FROM gatherreply WHERE replyno=#{param1} 
+	</delete>
+
+	<!-- 개설한 캠핑 리스트 -->
+	<select id="myPageOpenedCamping" resultType="GatherVO">
+		SELECT  gatherno, title, nickname, place, views, date_format(createdate, '%m-%d %H:%i') createdate
+		FROM gather
+		<if test='searchWord != null'>
+			WHERE ${searchKey} LIKE '%${searchWord}%'
+		</if>
+		ORDER BY gatherno DESC
+		LIMIT ${onePageRecord} OFFSET ${offsetIndex}
+	</select>
+	<!-- 페이징 토탈 레코드 member -->
+	<select id="totalRecord" resultType="int">
+		SELECT count(gatherno) AS cnt FROM gather
+		<if test='searchWord != null'>
+			WHERE ${searchKey} LIKE '%${searchWord}%'
+		</if>
+	</select>
+	<!-- 참여한 캠핑 리스트 -->
+	<select id="myPageCamping" resultType="GatherMemberVO">
+		SELECT gmemberno, nickname, gatherno
+		FROM  gathermember
+		<if test='searchWord != null'>
+			WHERE ${searchKey} LIKE '%${searchWord}%'
+		</if>
+		ORDER BY gatherno DESC
+		LIMIT ${onePageRecord} OFFSET ${offsetIndex}
+	</select>
+</mapper>

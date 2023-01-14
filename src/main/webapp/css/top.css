@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@200;400;500;600&family=IBM+Plex+Sans:wght@100;200;300;400;500&display=swap');
+
+*{
+	margin: 0px;
+	padding: 0px;
+}
+  
+ .logo{
+    position: relative;
+  }
+  
+ 
+.top__nav{
+	position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding-top: -23px;
+    z-index: 100;
+    box-shadow: 1px 2px 6px 0px rgb(0 0 0 / 15%);
+}
+
+.top__box{
+    position: relative;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.t__loginSign{
+	position: relative;
+    color: #464646;
+    font-size: 15px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    padding: 10px 20px;	
+    text-align: right;
+}
+
+.t__loginSign > div{
+	display: inline;
+}
+
+.t__loginSign  a{
+	padding: 0px 10px; 
+	color: #242424;
+}
+
+
+.top__nav ul{
+	display: flex;
+	justify-content: center;
+	list-style: none;
+    align-items: center;	
+}
+
+
+ul.t__myMenu > li { 
+	display: inline-block;
+    width: 280px;
+    padding: 0px 10px;
+    text-align: center;
+    position: relative;
+   
+}
+
+
+ul.t__myMenu > li ul.t__submenu { 
+	display:none; 
+	position:absolute;
+	top:35px; 
+	left:0; 
+}
+
+ul.t__myMenu > li:hover ul.t__submenu { 
+	display:block;
+	background:rgba(255, 255, 255, .8);
+	box-shadow: 1px 2px 6px 0px rgb(0 0 0 / 20%);
+}
+
+ul.t__myMenu > li ul.t__submenu > li { 
+	display:inline-block; 
+	width:280px; 
+	padding:5px 10px; 
+	text-align:center;
+}
+
+ul.t__myMenu > li ul.t__submenu > li:hover { 
+	background: #f58243;
+}
+
+.t__myMenu a {
+	color: #464646;
+    font-size: 23px;
+    font-weight: 500;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+

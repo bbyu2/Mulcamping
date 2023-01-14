@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.myapp.camping.CampingDAO">
+    <insert id="addplace">
+        insert into campinglist(modifiedtime, contentId, facltNm, lineIntro, intro, featureNm, induty, lctCl, doNm, sigunguNm, addr1, addr2, tel, homepage, resveUrl, resveCl, sbrsCl, posblFcltyCl, firstImageUrl, operPdCl, operDeCl)
+        values(#{modifiedtime}, #{contentId}, #{facltNm}, #{lineIntro}, #{intro}, #{featureNm}, #{induty}, #{lctCl}, #{doNm}, #{sigunguNm}, #{addr1}, #{addr2}, #{tel}, #{homepage}, #{resveUrl}, #{resveCl}, #{sbrsCl}, #{posblFcltyCl},#{firstImageUrl}, #{operPdCl}, #{operDeCl})
+    </insert>
+    
+    <insert id="addimages">
+    	insert into campingimages(contentId, imageUrl) values (#{contentId}, #{imageUrl})
+    </insert>
+	
+	<select id="totalRecord" resultType="int">
+		select count(contentId), sigunguNm, doNm from campinglist
+		where 1=1
+		<if test='doNm != null'>
+			and doNm   like '%${doNm}%'
+		</if>
+		<if test='sigunguNm != null'>
+			and sigunguNm   like '%${sigunguNm}%'
+		</if>
+		<if test='induty != null'>
+			and
+			<foreach item="item" collection="induty" separator="and">
+			 	induty like '%${item}%'
+			 </foreach>
+		</if>
+		<if test='sbrsCl != null'>
+			and 
+			<foreach item="item" collection="sbrsCl" separator="and">
+				sbrsCl like '%${item}%'
+			</foreach>
+		</if>
+		<if test='posblFcltyCl != null'>
+			and 
+			<foreach item="item" collection="posblFcltyCl" separator="and">
+				sbrsCl like '%${item}%'
+			</foreach>
+		</if>
+	</select>
+	
+	<select id="campingSearch" resultType="com.campus.myapp.camping.CampingVO">
+		select posblFcltyCl,modifiedtime, contentId, firstImageUrl, sigunguNm, doNm, facltNm, addr2, addr1, tel, induty, sbrsCl, intro, lineIntro 
+		from campinglist
+		where 1=1
+		<if test='doNm != null'>
+			and doNm like '%${doNm}%'
+		</if>
+		<if test='sigunguNm != null'>
+			and sigunguNm like '%${sigunguNm}%'
+		</if>
+		<if test='induty != null'>
+			and
+			<foreach item="item" collection="induty" separator="and">
+			 	induty like '%${item}%'
+			 </foreach>
+		</if>
+		<if test='sbrsCl != null'>
+			and 
+			<foreach item="item" collection="sbrsCl" separator="and">
+				sbrsCl like '%${item}%'
+			</foreach>
+		</if>
+		<if test='posblFcltyCl != null'>
+			and 
+			<foreach item="item" collection="posblFcltyCl" separator="and">
+				posblFcltyCl like '%${item}%'
+			</foreach>
+		</if>
+		<if test='animalCmgCl != null'>
+			and	animalCmgCl like '%${animalCmgCl}%'			
+		</if>	
+		<if test='operPdCl != null'>
+			and 
+			<foreach item="item" collection="operPdCl" separator="and">
+				operPdCl like '%${item}%'
+			</foreach>
+		</if>	
+		order by modifiedtime desc limit ${onePageRecord} offset ${offsetIndex}		
+	</select>
+	
+	<select id="campingTag" resultType="com.campus.myapp.camping.CampingVO">
+		select posblFcltyCl, modifiedtime, contentId, firstImageUrl, sigunguNm, doNm, facltNm, addr2, addr1, tel, induty, sbrsCl, intro, lineIntro 
+		from campinglist
+		where 1=1
+		<if test='doNm != null'>
+			and doNm like '%${doNm}%'
+		</if>
+		<if test='sigunguNm != null'>
+			and sigunguNm like '%${sigunguNm}%'
+		</if>
+		<if test='induty != null'>
+			and
+			<foreach item="item" collection="induty" separator="and">
+			 	induty like '%${item}%'
+			 </foreach>
+		</if>
+		<if test='sbrsCl != null'>
+			and 
+			<foreach item="item" collection="sbrsCl" separator="and">
+				sbrsCl like '%${item}%'
+			</foreach>
+		</if>
+		<if test='animalCmgCl != null'>
+			and	animalCmgCl like '%${animalCmgCl}%'			
+		</if>	
+		<if test='operPdCl != null'>
+			and 
+			<foreach item="item" collection="operPdCl" separator="and">
+				operPdCl like '%${item}%'
+			</foreach>
+		</if>	
+		<if test='posblFcltyCl != null'>
+			and 
+			<foreach item="item" collection="posblFcltyCl" separator="and">
+				posblFcltyCl like '%${item}%'
+			</foreach>
+		</if>
+		order by modifiedtime desc limit ${onePageRecord} offset ${offsetIndex}		
+	</select>
+	
+  	<select id="campingSelect" resultType="com.campus.myapp.camping.CampingVO">
+  		select campingimages.imageUrl, campingimages.imgno, animalCmgCl, campinglist.contentId, 
+  		facltNm, firstImageUrl, addr1, addr2, tel, lctCl, induty, operPdcl, operDecl, homepage, 
+  		resveCl, posblFcltyCl, intro, sbrsCl 
+  		from campingimages right outer join campinglist on campingimages.contentId = campinglist.contentId where campinglist.contentId = #{params};
+  	</select>
+  	
+  	<select id="campingSuggestion" resultType="com.campus.myapp.camping.CampingVO">
+  		select posblFcltyCl, modifiedtime, contentId, firstImageUrl, sigunguNm, doNm, facltNm, 
+  		addr2, addr1, tel, induty, sbrsCl, lineIntro, intro 
+		from campinglist where intro is not null order by rand(), modifiedtime desc limit 10
+  	</select>
+  	
+  	<!-- 캠핑 후기 -->
+	<select id="reviewListSelect" resultType="ReviewVO">
+		SELECT reviewno, nickname, contentId, content, recommend,
+		DATE_FORMAT(createdate, '%Y-%m-%d')createdate
+		FROM review WHERE contentId=#{contentId}
+	</select>
+	<insert id="reviewInsert">
+		INSERT INTO review(nickname, content, contentId, recommend)
+		VALUES(#{nickname}, #{content}, #{contentId}, #{recommend})
+	</insert>
+	<select id="reviewModalSelect" resultType="ReviewVO">
+		SELECT reviewno, nickname, contentId, content, recommend,
+		DATE_FORMAT(createdate, '%Y-%m-%d')createdate
+		FROM review WHERE reviewno=#{param1}
+	</select>
+	<update id="reviewUpdate">
+		UPDATE review set content=#{content}, recommend=#{recommend}
+		WHERE reviewno=${reviewno}
+	</update>
+	<delete id="reviewDelete">
+		DELETE FROM review WHERE reviewno=#{param1}
+	</delete>
+</mapper>

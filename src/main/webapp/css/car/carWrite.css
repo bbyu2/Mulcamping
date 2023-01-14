@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+.container>* {
+	margin:1%;
+}
+h1, .container *{
+	font-family: 'IBM Plex Sans KR', sans-serif; 
+}
+
+#cwFrm {
+	border: 2px solid orange;
+	padding: 10px;
+	padding-top: 30px;
+}
+
+#carMapWrap {
+	
+	height: 900px;
+	float:left;
+}
+
+#carWriteWrap {
+	
+	height: 900px;
+	float:left;
+	padding-top : 0px;
+}
+
+#cwTable {
+	margin: 1%;
+}
+
+#cwTable td:nth-child(2), #cwTable td:nth-child(3){
+	width:29%;
+	padding: 2px;
+}
+#cwTable td:nth-child(1), #cwTable td:nth-child(4){
+	width:15%;
+	padding: 2px;
+}
+#cwTable td:nth-child(1) {
+	width: 27%;
+}
+#cwTable td *{
+	width:100%;
+}
+#cwTable button {
+	border: 2px solid #f58243;
+	border-radius : 2px;
+	background-color: #f58243;
+	padding: 2px 0;
+	color:white;
+}
+#cwTable button:hover {
+	background-color: #e57233;
+}
+
+#cwTable select, #cwTable input, #cwTable button, #carName {
+	padding: 3px;
+}
+
+#cwLabel {
+	border: 1px solid black;
+	width: 100%;
+	padding: 5px;
+	font-size: 12px;
+}
+
+#carWriteWrap>* {
+	width: 98%;
+	margin:1%;
+	margin-bottom:2px;
+}
+#cwWriteSubmitWrap {
+	text-align: right
+}
+
+#carWriteSubmit {
+	width: 90px;
+	padding: 6px 12px;
+	border: 0px;
+	border-radius: 5px;
+	background-color: #f58243;
+	margin-right: 17px;
+	margin-bottom: 17px;
+	color:white;
+}
+#carWriteSubmit:hover {
+	background-color: #e57233;
+}
+
+
+.map_wrap { position:relative; width:100%; height:782px;}
+.title {font-weight:bold;display:block;}
+.hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
+#centerAddr {display:block;margin-top:2px;font-weight: normal;}
+.bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
