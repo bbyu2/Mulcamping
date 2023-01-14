@@ -75,7 +75,7 @@
 ![mc-9](https://user-images.githubusercontent.com/84059211/212460655-0715de12-200b-4b77-ab2d-19f68c2a3f4a.png)
 ![mc-8](https://user-images.githubusercontent.com/84059211/212460657-d59e6a9c-c2ee-486d-be00-0fee36bc6977.png)
 
-### 3.MyPage
+### 3.My Page
 ```
 일정확인, 회원정보 수정, 참여한 캠핑목록, 개설한 캠핑목록 확인 가능
 ```
@@ -87,7 +87,7 @@
 ```
 ![mc-11](https://user-images.githubusercontent.com/84059211/212460874-a1c87f83-f9e7-4011-8607-4196c7c78780.png)
 
-### 4-1.Camping Serch detail page
+### 4-1.Camping Search detail page
 ```
 전경 이미지, 위치, 연락처, 홈페이지, 소개글등 기본 정보 캠핑장의 기본 정보 확인가능
 ```
@@ -95,7 +95,7 @@
 ```
 모달창을 활용한 후기 작성 및 추천 기능
 ```
-![mc-13](https://user-images.githubusercontent.com/84059211/212461226-078528c1-ef3b-4240-bb71-f7aaaf301438.png)
+![image](https://user-images.githubusercontent.com/84059211/212462499-be7dba5c-b3de-47cd-bdc1-bef4f46f79c5.png)
 
 ### 5. Gather People
 ```
